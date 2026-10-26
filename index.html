@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0b1020">
+<title>AI Magic — ابزارهای هوش مصنوعی</title>
+<meta name="description" content="AI Magic، ابزارهای هوش مصنوعی برای ویرایش و ساخت تصاویر.">
+<style>
+:root {
+  color-scheme: dark;
+  --bg:#0b1020;
+  --panel:#141c30;
+  --line:#293650;
+  --text:#f4f7ff;
+  --muted:#aab6cc;
+  --purple:#8b5cf6;
+  --cyan:#22d3ee;
+}
+* { box-sizing:border-box; }
+body {
+  margin:0;
+  background:radial-gradient(ellipse at top,#1a2450,var(--bg) 65%);
+  color:var(--text);
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+  min-height:100vh;
+}
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  gap:16px; padding:18px max(5%,calc((100% - 1100px)/2));
+  border-bottom:1px solid var(--line);
+  background:#0b1020dd;
+}
+.brand {font-size:25px;font-weight:850;letter-spacing:-1px}
+.brand span {color:var(--cyan)}
+.pill {border:1px solid var(--line);border-radius:99px;padding:7px 12px;color:var(--muted);font-size:12px}
+main {max-width:1050px;margin:auto;padding:38px 18px 65px}
+.hero {text-align:center;margin-bottom:30px}
+.hero h1 {font-size:clamp(30px,6vw,52px);margin:0 0 12px}
+.hero h1 span {color:var(--cyan)}
+.hero p {color:var(--muted);line-height:1.9;max-width:650px;margin:auto}
+.tools {
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));
+  gap:12px;margin:28px 0;
+}
+.tool {
+  text-align:right;background:var(--panel);color:var(--text);
+  border:1px solid var(--line);border-radius:16px;padding:16px;
+  cursor:pointer;min-height:115px;transition:.2s;
+}
+.tool:hover:not(:disabled),.tool.active {
+  border-color:var(--cyan);transform:translateY(-2px);
+  box-shadow:0 8px 28px #22d3ee13;
+}
+.tool:disabled {opacity:.48;cursor:not-allowed}
+.tool .emoji {font-size:25px;display:block;margin-bottom:8px}
+.tool strong {display:block;font-size:14px}
+.tool small {color:var(--muted);display:block;margin-top:6px}
+.panel {
+  background:#10182b;border:1px solid var(--line);
+  border-radius:22px;padding:22px;
+}
+.panel h2 {margin-top:0;font-size:20px}
+.hint {color:var(--muted);font-size:13px;line-height:1.8}
+.upload {
+  display:block;text-align:center;padding:30px 14px;
+  border:2px dashed #425273;border-radius:16px;cursor:pointer;
+  background:#0c1426;
+}
+.upload:hover {border-color:var(--cyan)}
+.upload input {display:block;width:100%;margin-top:15px}
+button.action {
+  width:100%;border:0;border-radius:12px;padding:14px;
+  margin-top:15px;font-size:15px;font-weight:750;cursor:pointer;
+  color:white;background:linear-gradient(100deg,var(--purple),#5268f5);
+}
+button.action:disabled {opacity:.5;cursor:not-allowed}
+.status {margin-top:16px;padding:12px;border-radius:12px;background:#1a2540;line-height:1.8;overflow-wrap:anywhere}
+.status.error {background:#401d2a;color:#ffd5df}
+.status.success {background:#123b36;color:#c8fff2}
+.preview {margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:15px}
+.preview figure {margin:0;background:#0a1020;border:1px solid var(--line);padding:10px;border-radius:14px}
+.preview figcaption {font-size:13px;color:var(--muted);margin-bottom:10px}
+.preview img {width:100%;max-height:430px;object-fit:contain;border-radius:8px}
+.download {display:inline-block;margin-top:14px;color:#9cecff;font-weight:700}
+footer {text-align:center;padding:25px;color:var(--muted);font-size:12px;line-height:1.8}
+[hidden] {display:none!important}
+@media(max-width:500px) {
+  header {padding:14px}
+  main {padding:28px 12px 45px}
+  .panel {padding:15px}
+  .tools {grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">✨ AI <span>Magic</span></div>
+  <div class="pill">نسخهٔ آزمایشی</div>
+</header>
+
+<main>
+  <section class="hero">
+    <h1>جادوی هوش مصنوعی، <span>ساده‌تر</span></h1>
+    <p>ابزارهای تصویر را انتخاب کن. قابلیت‌هایی که هنوز آماده نیستند، مشخص شده‌اند؛ نتیجهٔ ساختگی نمایش داده نمی‌شود.</p>
+  </section>
+
+  <section class="tools" aria-label="ابزارهای تصویر">
+    <button class="tool active" data-tool="remove-bg">
+      <span class="emoji">✂️</span>
+      <strong>حذف پس‌زمینه</strong>
+      <small>پردازش واقعی در مرورگر</small>
+    </button>
+    <button class="tool" data-tool="child">
+      <span class="emoji">👨‍👩‍👧</span>
+      <strong>پیش‌بینی چهرهٔ فرزند</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="anime">
+      <span class="emoji">🎨</span>
+      <strong>تبدیل به انیمه</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="enhance">
+      <span class="emoji">✨</span>
+      <strong>افزایش کیفیت عکس</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="restore">
+      <span class="emoji">🖼️</span>
+      <strong>ترمیم عکس قدیمی</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="avatar">
+      <span class="emoji">🧑‍🎤</span>
+      <strong>ساخت آواتار</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="color">
+      <span class="emoji">🌈</span>
+      <strong>رنگی کردن عکس</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="erase">
+      <span class="emoji">🪄</span>
+      <strong>حذف اشیاء</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="portrait">
+      <span class="emoji">📸</span>
+      <strong>بهبود پرتره</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+    <button class="tool" data-tool="style">
+      <span class="emoji">🪄</span>
+      <strong>تغییر سبک تصویر</strong>
+      <small>هنوز آماده نیست</small>
+    </button>
+  </section>
+
+  <section class="panel">
+    <h2 id="toolTitle">✂️ حذف پس‌زمینه</h2>
+    <p id="toolDescription" class="hint">یک تصویر انتخاب کن. پردازش روی دستگاهت انجام می‌شود؛ برای بارگیری موتور هوش مصنوعی به اینترنت نیاز داری.</p>
+
+    <label id="uploadBox" class="upload">
+      <strong id="uploadTitle">انتخاب تصویر</strong>
+      <div class="hint">JPG، PNG یا WEBP — حداکثر 10 مگابایت</div>
+      <input id="imageInput" type="file" accept="image/jpeg,image/png,image/webp">
+    </label>
+
+    <button id="processBtn" class="action" disabled>حذف پس‌زمینه</button>
+    <div id="status" class="status" role="status" aria-live="polite">برای شروع، یک تصویر انتخاب کن.</div>
+
+    <div id="preview" class="preview" hidden>
+      <figure>
+        <figcaption>تصویر اصلی</figcaption>
+        <img id="originalPreview" alt="پیش‌نمایش تصویر اصلی">
+      </figure>
+      <figure>
+        <figcaption>نتیجهٔ پردازش</figcaption>
+        <img id="resultPreview" alt="نتیجهٔ حذف پس‌زمینه">
+        <a id="downloadLink" class="download" download="ai-magic-no-background.png">دانلود تصویر PNG</a>
+      </figure>
+    </div>
+  </section>
+</main>
+
+<footer>
+  AI Magic — نسخهٔ آزمایشی<br>
+  تصویرها را فقط برای ابزارهای موردنیاز انتخاب کن. قابلیت‌های در دست توسعه هنوز نتیجه تولید نمی‌کنند.
+</footer>
+
+<script type="module" src="./ai-tools.js"></script>
+</body>
+</html>
